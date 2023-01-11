@@ -1,0 +1,60 @@
+<div class="col-md-12">
+    <div class="card card-container">
+        <!--To display profile image icon-->
+        <img
+            id="profile-img"
+            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+            class="profile-img-card"
+        />
+        
+        <!--Form to be submitted if the form is valid-->
+        <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" nonvalidate>
+            <div class="form-group">
+                <!--Field to type the user's username-->
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username" [(ngModel)]="form.username" #username="ngModel" required [class.is-invalid]="username.invalid && username.touched" ngModel/>
+                <div class="err" *ngIf = "username.dirty && username.invalid">
+                    Username is required
+                </div>
+            </div>
+
+            <div class="form-group">
+                <!--Field to type the user's password-->
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" [(ngModel)]="form.password" #password="ngModel" required minlength="8" maxlength="15" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,20}$" [class.is-invalid]="password.invalid && password.touched" ngModel/>
+                    <!--Password should follow the regex pattern-->
+                    <small class="err" *ngIf="password.errors?.['pattern'] && password.dirty && password.invalid">
+                        Password is required and should be in following pattern.<br>
+                      <ul>
+                        <li> At least 1 Uppercase</li>
+                        <li>At least 1 Lowercase</li>
+                        <li>At least 1 Number</li>
+                        <li>At least 1 Symbol and allowed symbols are !@#$%^&*_=+-</li>
+                        <li>Minimum 8 characters and Maximum 15 characters</li>
+                      </ul>
+                    </small>
+                
+            </div>
+
+            <!--Submit button to sign in-->
+            <div class="form-group">
+                <button id="submit-btn" class="btn btn-success btn-block" type="submit" [disabled]="!f.form.valid || password.errors || password.invalid">
+                    Sign In
+                </button>
+            </div>
+            
+            <!--Link to redirect to register page-->
+            <div style="text-align: center;">
+                New User? Click<a href="/register"> here</a> to register in the Portal
+            </div>
+
+            <!--To display when the user enters Bad credentials-->
+            <div class="form-group">
+                <div class="alert alert-danger" *ngIf="f.submitted && isLoginFailed">
+                    Login Failed. 
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>

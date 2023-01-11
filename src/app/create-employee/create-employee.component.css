@@ -1,0 +1,14 @@
+.err{
+    color: red;
+}
+
+#btnAdd,
+#btnBack{
+    display: inline-block;
+    vertical-align: top;
+    margin-bottom: 25px;
+}
+
+#btnAdd{
+    margin-right: 16px;
+}

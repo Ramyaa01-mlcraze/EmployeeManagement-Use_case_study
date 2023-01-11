@@ -1,0 +1,98 @@
+<!--To display the profile details of the current user-->
+<div class="container" *ngIf="currentUser">
+    <header class="jumbotron">
+        <h3>
+            <strong>MY PROFILE</strong>
+        </h3>
+    </header>
+    <p>
+        <strong>Username : </strong>
+        {{currentUser.username}} 
+    </p>
+    <p>
+        <strong>Email : </strong>
+        {{ currentUser.email }}
+    </p>
+    
+    <strong>Roles:</strong>
+    <ul>
+        <li *ngFor="let role of currentUser.roles">
+            {{role}}
+        </li>
+    </ul>
+
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Change Password
+  </button>
+  
+  <!-- Modal to change the password -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h5 class="modal-title w-100 font-weight-bold" id="exampleModalLabel">Change Password</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+                
+        
+                <div class="md-form mb-4">
+                  <!--Field to type the new password-->
+                  <label data-error="wrong" data-success="right" for="defaultForm-pass">Password</label>
+                  <input [(ngModel)]="pass" type="password" id="password" class="form-control" placeholder="New Password" #password="ngModel" required minlength="8" maxlength="15" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,20}$" [class.is-invalid]="password.invalid && password.touched" ngModel/>
+                  <small class="err" *ngIf="checkPass">Passwords don't match!</small>
+                  <small class="err" *ngIf="password.errors?.['pattern'] && password.dirty && password.invalid">
+                    New Password should be in following pattern.<br>
+                  <ul>
+                    <li> At least 1 Uppercase</li>
+                    <li>At least 1 Lowercase</li>
+                    <li>At least 1 Number</li>
+                    <li>At least 1 Symbol and allowed symbols are !@#$%^&*_=+-</li>
+                    <li>Minimum 8 characters and Maximum 15 characters</li>
+                  </ul>
+                </small>
+                  
+                </div>
+
+                <div class="md-form mb-4">
+                  <!--Field to type the confirm password-->
+                  <label data-error="wrong" data-success="right" for="defaultForm-pass">Confirm Password</label>
+                  <input [(ngModel)]="confirm" type="password" id="confirmPass" class="form-control" placeholder="Confirm New Password" #confirmPass="ngModel" required minlength="8" maxlength="15" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,20}$" [class.is-invalid]="confirmPass.invalid && confirmPass.touched" ngModel/>
+                  <small class="err" *ngIf="checkPass">Passwords don't match!</small>
+                  <small class="err" *ngIf="confirmPass.errors?.['pattern'] && confirmPass.dirty && confirmPass.invalid">
+                    Confirm Password should be in following pattern.<br>
+                  <ul>
+                    <li> At least 1 Uppercase</li>
+                    <li>At least 1 Lowercase</li>
+                    <li>At least 1 Number</li>
+                    <li>At least 1 Symbol and allowed symbols are !@#$%^&*_=+-</li>
+                    <li>Minimum 8 characters and Maximum 15 characters</li>
+                  </ul>
+                </small>
+                </div>
+                
+        
+            
+        </div>
+        <!--Button to close and submit-->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button [disabled]="password.errors || password.invalid || confirmPass.errors || confirmPass.invalid" (click)="onSubmit()" type="submit" class="btn btn-success">Submit</button>
+        </div>
+      </div>
+      <div id="message">
+        
+      </div>
+    </div>
+  </div>
+    
+</div>
+
+
+
+<ng-template #loggedOut>
+    Please Login.
+</ng-template>

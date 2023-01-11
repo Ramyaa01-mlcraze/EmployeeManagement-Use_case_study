@@ -1,0 +1,16 @@
+h3{
+    text-align: center;
+}
+
+.btn-primary{
+    float: right;
+    margin-top: -150px;
+}
+
+.modal-title{
+    text-align: center;
+}
+
+.err{
+  color: red;
+}

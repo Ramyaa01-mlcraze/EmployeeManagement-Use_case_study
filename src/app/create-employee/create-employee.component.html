@@ -1,0 +1,70 @@
+<div class="container" [hidden]="submitted">
+    <form class="form w-75" (ngSubmit)="onSubmit()" #myForm="ngForm">
+
+        <!--Input Field for Employee's First Name-->
+        <div class="form-group d-flex w-65">
+            <label for="empFirstName">FirstName</label>
+            <input type="text" class="form-control mx-2" id="empFirstName" #empFirstName="ngModel" required [(ngModel)]="employee.empFirstName" name="empFirstName" minlength="3" maxlength="20">
+            <div class="err" *ngIf="empFirstName.dirty && empFirstName.invalid">
+                <div>First Name is required</div>
+                <div>Minimum length is 3 characters</div>
+            </div>
+        </div>
+        <br>
+
+        <!--Input Field for Employee's Last Name-->
+        <div class="form-group d-flex w-65">
+            <label for="empLastName">LastName</label>
+            <input type="text" class="form-control mx-2" id="empLastName" #empLastName="ngModel" required [(ngModel)]="employee.empLastName" name="empLastName" minlength="3" maxlength="20">
+            <div class="err" *ngIf="empLastName.dirty && empLastName.invalid">
+                <div>Last Name is required</div>
+                <div>Minimum length is 3 characters</div>
+            </div>
+        </div>
+        <br>
+
+        <!--Input Field for Employee's Email ID-->
+        <div class="form-group d-flex w-70">
+            <label for="empEmailID">Email</label>
+            <input type="text" class="form-control mx-2" id="empEmailID" #empEmailID="ngModel" required [(ngModel)]="employee.empEmailID" name="empEmailID" pattern="[a-z0-9.]+@[a-z0-9.-]+\.[a-z]{2,3}$">
+            <div class="err" *ngIf="empEmailID.dirty && empEmailID.invalid">
+                <div>Email is invalid</div>
+            </div>
+        </div>
+        <br>
+
+        <!--Input Field for Employee's Salary-->
+        <div class="form-group d-flex w-70">
+            <label for="empSalary">Salary</label>
+            <input type="number" class="form-control mx-2" id="empSalary" #empSalary="ngModel" required [(ngModel)]="employee.empSalary" name="empSalary" minlength="4">
+            <div class="err" *ngIf="empSalary.dirty && empSalary.invalid">
+                <div>Salary is required</div>
+            </div>
+        </div>
+        <br>
+
+        <!--Input Field for Employee's Job-->
+        <div class="form-group d-flex w-70">
+            <label for="job">AllocatedJob</label>
+            <input type="text" class="form-control mx-2" id="empAllocatedJobs" #empAllocatedJobs="ngModel" required [(ngModel)]="employee.empAllocatedJobs" name="empAllocatedJobs">
+            <div class="err" *ngIf="empAllocatedJobs.dirty && empAllocatedJobs.invalid">
+                <div>Job is required</div>
+            </div>
+        </div>
+        <br>
+        
+        <!--Submit Button and Back Button-->
+        <div class="col-sm-12">
+            <button type="submit" [disabled]="!myForm.form.valid" id="btnAdd" class="btn btn-success btn-md center-block">Add Employee</button>
+            <button (click)="gotoList()" id="btnBack" class="btn btn-primary btn-md center-block" style="width: 100px;">Back</button><br>
+        </div>
+    </form>
+
+</div>
+
+
+
+
+
+
+

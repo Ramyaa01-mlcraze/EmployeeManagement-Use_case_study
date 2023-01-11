@@ -1,0 +1,78 @@
+<div class="col-md-12">
+    <div class="card card-container">
+        <!--To display profile image icon-->
+        <img
+            id="profile-img"
+            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+            class="profile-img-card"
+        />
+
+        <!--Form to be submitted if the form is valid-->
+        <form *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" nonvalidate>
+            <div class="form-group">
+                <!--Field to type the user's username-->
+                <label for="username">Username</label>
+                <input type="text" class="form-control" name="username" [(ngModel)]="form.username" #username="ngModel" required minlength="3" maxlength="20" [class.is-invalid]="username.invalid && username.touched" ngModel/>
+                <div class="err" *ngIf = "username.dirty && username.invalid">
+                    Username is required and should have at least 3 to 20 characters
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <!--Field to type the user's email Id-->
+                <label for="email">Email</label>
+                <input type="email" class="form-control" name="email" [(ngModel)]="form.email" #email="ngModel" required email pattern="[a-z0-9.]+@[a-z0-9.-]+\.[a-z]{2,3}$" [class.is-invalid]="email.invalid && email.touched" ngModel/>
+                <!--Email should be a valid email address-->
+                <div class="err" *ngIf = "email.dirty && email.invalid">
+                    Email is required and must be a valid email address
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <!--Field to type the user's password-->
+                <input type="password" class="form-control" name="password" [(ngModel)]="form.password" #password="ngModel" required minlength="8" maxlength="15" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,20}$" [class.is-invalid]="password.invalid && password.touched" ngModel/>
+                <!--Password should follow the regex pattern-->
+                <small class="err" *ngIf="password.errors?.['pattern'] && password.dirty && password.invalid">
+                    Password is required and should be in following pattern.<br>
+                  <ul>
+                    <li> At least 1 Uppercase</li>
+                    <li>At least 1 Lowercase</li>
+                    <li>At least 1 Number</li>
+                    <li>At least 1 Symbol and allowed symbols are !@#$%^&*_=+-</li>
+                    <li>Minimum 8 characters and Maximum 15 characters</li>
+                  </ul>
+                </small>
+            </div>
+
+            <!--Submit button to sign up-->
+            <div class="form-group">
+                <button class="btn btn-success btn-block" [disabled]="!f.form.valid || password.errors || password.invalid" type="submit">
+                    Sign Up
+                </button>
+            </div>
+
+
+            <!--To display when the user enters Bad credentials-->
+            <div class="alert alert-danger" role="alert" *ngIf="f.submitted && isSignUpFailed">
+                Sign Up Failed!: {{errorMessage}}
+            </div>
+
+            <!--Link to redirect to login page-->
+            <div style="text-align: center;">
+                Already a Registered User? Click<a href="/login"> here</a> to login
+            </div>
+
+           
+            
+        </form>
+
+        <!--To display when the user's registration is successful-->
+        <div class="alert alert-success" *ngIf="isSuccessful">
+            Your Registration is Successful! Please <a href="/login">Login</a> to continue to access the Portal.
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,62 @@
+<div id ="app">
+    <nav class="navbar navbar-expand navbar-light bg-light">
+        <!--Nav items which is left aligned-->
+        <ul class="navbar-nav mr-auto" routerLinkActive="active">
+            <li class="nav-item">
+                <a href="/home" class="nav-link" routerLink="home" *ngIf="!isLoggedIn">Home</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="dashboard" class="nav-link" *ngIf="isLoggedIn">Home</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="employees" class="nav-link" *ngIf="isLoggedIn">Employees</a>
+            </li>
+        </ul>
+
+            <!--Buttons right aligned when the user is not logged in-->
+            <button *ngIf="!isLoggedIn" type="button" class="btn btn-dark my-2 my-sm-0">
+                <a href="/register" routerLink="register" class="nav-link">Sign Up</a>
+            </button>&nbsp;&nbsp;&nbsp;
+            <button *ngIf="!isLoggedIn" type="button" class="btn btn-dark my-2 my-sm-0">
+                <a routerLink="login" class="nav-link" routerLinkActive="active">Login</a>
+            </button>
+        
+        <!--Profile nav item-->
+        <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
+            <li class="nav-item">
+                <a routerLink="profile" class="nav-link" *ngIf="isLoggedIn">{{username}}</a>
+            </li>&nbsp;&nbsp;&nbsp;
+        </ul>
+        
+            <!--Buttons right aligned when the user is logged in-->
+            <button *ngIf="isLoggedIn && showAddEmployee" type="button" class="btn btn-dark my-2 my-sm-0" >
+                <a routerLink="add" class="nav-link" routerLinkActive="active">Add Employee</a>
+            </button>&nbsp;&nbsp;&nbsp;
+          
+            <button *ngIf="isLoggedIn" type="button" class="btn btn-dark my-2 my-sm-0">
+                <a href class="nav-link" (click)="logout()">Sign Out</a>
+            </button>
+        
+
+    </nav>
+
+    <!--Title rendered from index.html file-->
+    <div class="container">
+        <br>
+        <h2 style = "text-align: center;">{{title}}</h2>
+        
+        <hr>
+        <div class="card">
+            <div class="card-body">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+    
+    <!--Footer-->
+    <div class="footer">
+        <p>&copy; Copyright, 2022, EMS</p>
+    </div>
+</div>
+
+

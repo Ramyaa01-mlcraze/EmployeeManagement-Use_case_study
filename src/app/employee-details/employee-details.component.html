@@ -1,0 +1,35 @@
+<!--To Display the details of the employee when the info icon is clicked-->
+
+<h2>Details of the Employee</h2>
+
+<hr/>
+<div *ngIf="employee">
+    <div>
+        <label><b>Empid : </b></label> {{employee.id}}
+    </div>
+
+    <div>
+        <label><b>EmpFirstName : </b></label> {{employee.empFirstName}}
+    </div>
+
+    <div>
+        <label><b>EmpLastName : </b></label> {{employee.empLastName}}
+    </div>
+
+    <div>
+        <label><b>EmpEmailID : </b></label> {{employee.empEmailID}}
+    </div>
+
+    <div>
+        <label><b>EmpSalary : </b></label> {{employee.empSalary}}
+    </div>
+
+    <div>
+        <label><b>EmpAllocatedJobs : </b></label> {{employee.empAllocatedJobs}}
+    </div>
+
+</div>
+
+<br>
+<br>
+<button (click)="list()" class="btn btn-primary">Back</button><br>

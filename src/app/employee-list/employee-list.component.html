@@ -1,0 +1,150 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h2>List of Employees</h2>
+
+        <!--Show Download Button to download in Excel, PDF and CSV when the role is Admin-->
+        <div class="dropdown pull-right" *ngIf="showDownload">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Download
+            </button>
+
+            <!--Show Delete Button to delete the employees when the role is Admin-->
+            <button (click)="deleteSelected()" class="btn btn-danger">
+                 Delete 
+            </button>
+
+            <!--Show DropDown menu to download in Excel, PDF and CSV wen the role is Admin-->
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+              <button (click)="downloadExcel()" class="dropdown-item" type="button"><i class="bi bi-file-earmark-spreadsheet" aria-hidden="true"></i> Download Excel</button>
+              <button (click)="downloadPdf()" class="dropdown-item" type="button"><i class="bi bi-file-earmark-pdf" aria-hidden="true"></i> Download PDF</button>
+              <button (click)="downloadCsv()" class="dropdown-item" type="button"><i class="bi bi-filetype-csv" aria-hidden="true"></i> Download CSV</button>
+            </div>
+        </div>
+            
+    </div>
+    <br>
+
+    <!--Search filter to filter the employees-->
+    <div class="panel-body">
+        <input name="search" class="form-control" [(ngModel)]="searchText" type="text" placeholder="Start typing to filter...">
+        <br>
+       
+        <br>
+        <br>
+
+        <!--List of Employees in a table format-->
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th *ngIf="showCheck"></th>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name </th>
+                    <th>Email</th>
+                    <th>Salary</th>
+                    <th>Allocated Job</th>
+                    <th *ngIf="showActions"> Actions </th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--Pagination and search filter-->
+                <tr *ngFor="let employee of employees | async | filter:searchText | paginate
+                : {
+                    itemsPerPage: 4,
+                    currentPage: page,
+                    totalItems: count
+                  };">
+
+                  <!--Show Check box to delete a employee and do group delete action-->
+                  <td *ngIf="showCheck">
+                    <input type="checkbox" #checkdelet (change)="checkdelet" id="checkBoxId" name="deletecheck" (click)="selectID(employee.id,$event)"/>
+                  </td>
+                  
+                  <!--Display the employees and to edit when inline editable option is called-->
+                    <td>{{employee.id}}</td>
+                    <td>
+                        <div *ngIf="employee.isEdit">
+                            <input type="text" [(ngModel)]="temp.empFirstName"/> 
+                        </div>
+                        <div *ngIf="!employee.isEdit">
+                            {{employee.empFirstName}}
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="employee.isEdit">
+                            <input type="text" [(ngModel)]="temp.empLastName"/> 
+                        </div>
+                        <div *ngIf="!employee.isEdit">
+                            {{employee.empLastName}}
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="employee.isEdit">
+                            <input type="text" [(ngModel)]="temp.empEmailID"/> 
+                        </div>
+                        <div *ngIf="!employee.isEdit">                               
+                            {{employee.empEmailID}}
+                        </div> 
+                    </td>
+                    <td>
+                        <div *ngIf="employee.isEdit">
+                            <input type="text" [(ngModel)]="temp.empSalary"/> 
+                        </div>
+                        <div *ngIf="!employee.isEdit">
+                            {{employee.empSalary}}
+                        </div>  
+                    </td>
+                    <td>
+                        <div *ngIf="employee.isEdit">
+                            <input type="text" [(ngModel)]="temp.empAllocatedJobs"/> 
+                        </div>
+                        <div *ngIf="!employee.isEdit">
+                            {{employee.empAllocatedJobs}}
+                        </div>
+                    </td>
+                    <td *ngIf="showActions">
+                        <div *ngIf="!employee.isEdit">
+                            
+                            <!--Info icon to display the employee details-->
+                            <i class = "bi bi-info-circle" (click)="employeeDetails(employee.id)" data-toggle="modal" data-placement="bottom" title="Employee ID : {{employee.id}}
+First Name : {{employee.empFirstName}}
+Last Name : {{employee.empLastName}}
+Email : {{employee.empEmailID}}
+Salary : {{employee.empSalary}}
+Job : {{employee.empAllocatedJobs}}">                       
+                            </i>
+                            
+                            &nbsp;&nbsp;&nbsp;
+
+                            <!--Edit icon to update the employee-->
+                            <i (click) = "onEdit(employee)" class = "bi bi-pen" data-toggle="tooltip" data-placement="bottom" title="Edit" ></i>
+                           
+                       </div>
+
+                       <!--Inline editable icon to save and discard the changes-->
+                       <div *ngIf="employee.isEdit">
+                            <i (click)="inLineUpdate(employee.id)" class="bi bi-check-circle-fill"></i>
+                            
+                            <i (click)="employee.isEdit = false" class="bi bi-x-circle-fill"></i>  
+                    
+                        </div>
+                       
+                    </td>
+                </tr>
+                   
+            </tbody>
+            
+        </table>
+
+    </div>
+</div>
+
+<!--Pagination-->
+<div class="d-flex justify-content-center">
+    <pagination-controls
+      previousLabel="Prev"
+      nextLabel="Next"
+      (pageChange)="onTableDataChange($event)"
+    >
+    </pagination-controls>
+</div>
